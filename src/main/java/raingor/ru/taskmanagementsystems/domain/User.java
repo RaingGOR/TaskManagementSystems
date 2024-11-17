@@ -17,9 +17,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", schema = "flyway_schema")
+@Table(name = "users", schema = "public")
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -30,6 +31,15 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Task> createdTasks;
+
+    @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
+    private List<Task> assignedTasks;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
