@@ -20,11 +20,10 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-
     //reg
     public JwtAuthenticationResponse signUp(SignUpRequest signUpRequest) {
         var user = User.builder()
-                .name(signUpRequest.getUsername())
+                .name(signUpRequest.getName())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .email(signUpRequest.getEmail())
                 .role(Role.ROLE_USER)
@@ -38,13 +37,13 @@ public class AuthenticationService {
 
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getUsername(),
+                request.getName(),
                 request.getPassword()
         ));
 
         var user = userService
                 .userDetailsService()
-                .loadUserByUsername(request.getUsername());
+                .loadUserByUsername(request.getName());
 
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);

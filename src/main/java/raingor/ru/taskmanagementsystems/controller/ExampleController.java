@@ -28,4 +28,10 @@ public class ExampleController {
     public String exampleAdmin() {
         return "Hello, admin!";
     }
+
+    @GetMapping("/get-admin")
+    @Operation(summary = "Получить роль ADMIN (для демонстрации)")
+    public void getAdmin() {
+        service.getAdmin();
+    }
 }

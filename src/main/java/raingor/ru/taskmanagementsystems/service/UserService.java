@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import raingor.ru.taskmanagementsystems.domain.Role;
 import raingor.ru.taskmanagementsystems.domain.User;
 import raingor.ru.taskmanagementsystems.repository.UserRepository;
 
@@ -41,5 +42,12 @@ public class UserService {
 
     public UserDetailsService userDetailsService() {
         return this::getUserByUsername;
+    }
+
+    @Deprecated
+    public void getAdmin() {
+        var user = getCurrentUser();
+        user.setRole(Role.ROLE_ADMIN);
+        userRepository.save(user);
     }
 }
