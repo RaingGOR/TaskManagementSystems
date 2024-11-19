@@ -47,3 +47,6 @@
 #### **Аккаунт юзера:**
 * Логин: regular_user
 * Пароль: useruser
+## Получение токена
+(url: http://localhost:8080)
+![img.png](img.png)
