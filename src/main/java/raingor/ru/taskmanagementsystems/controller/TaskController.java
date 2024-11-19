@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import raingor.ru.taskmanagementsystems.dto.StatusTaskDTO;
 import raingor.ru.taskmanagementsystems.dto.TaskDTO;
 import raingor.ru.taskmanagementsystems.service.TaskService;
 
@@ -20,14 +22,15 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public List<TaskDTO> getTasks() {
-        return taskService.getAllTasks();
+    public List<TaskDTO> getTasks(Pageable pageable) {
+        return taskService.getAllTasks(pageable);
     }
 
-    @GetMapping
-    public List<TaskDTO> getTasks(@RequestParam(value = "offset") Integer offset,
-                                  @RequestParam(value = "limit") Integer limit) {
-        return taskService.getAllTasks(PageRequest.of(offset, limit));
+    @PatchMapping("/{id}/status")
+    public HttpStatus updateTaskStatus(@PathVariable("id") Long id, @RequestBody StatusTaskDTO statusTaskDTO) {
+        taskService.updateTaskStatus(id, statusTaskDTO);
+
+        return HttpStatus.NO_CONTENT;
     }
 
     @PostMapping

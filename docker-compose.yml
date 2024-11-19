@@ -24,6 +24,6 @@ services:
       postgres:
         condition: service_healthy  # Запуск backend только если БД готова
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/InfoHub
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/TaskManagementSystems
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: relocate
+      SPRING_DATASOURCE_PASSWORD: postgres

@@ -47,7 +47,7 @@ class TaskServiceTest {
 
         when(taskRepository.findAll()).thenReturn(List.of(task));
 
-        List<TaskDTO> tasks = taskService.getAllTasks();
+        List<TaskDTO> tasks = taskService.getAllTasks(null);
 
         assertNotNull(tasks);
         assertEquals(1, tasks.size());
